@@ -6,7 +6,7 @@ before_install:
   - docker build -t prion4362/docker-react -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true prion4362/docker-react npm run test
+  - docker run -e CI=true prion4362/docker-react run test
 
 after_success:
   - docker build -t prion4362/multi-client ./client
