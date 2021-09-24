@@ -1,0 +1,27 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t prion4362/docker-react -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true prion4362/docker-react npm run test
+
+after_success:
+  - docker build -t prion4362/multi-client ./client
+  - docker build -t prion4362/multi-nginx ./nginx
+  - docker build -t prion4362/multi-server ./server
+  - docker build -t prion4362/multi-worker ./worker
+
+  # Log into the Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Push images to the Docker Hub
+  - docker push prion4362/multi-client
+  - docker push prion4362/multi-nginx
+  - docker push prion4362/multi-server
+  - docker push prion4362/multi-worker
+
+
+
