@@ -23,7 +23,7 @@ after_success:
   - docker push prion4362/multi-server
   - docker push prion4362/multi-worker
 
-  deploy:
+deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
   app: "multi-docker"
@@ -34,7 +34,6 @@ after_success:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
-
 
 
 
